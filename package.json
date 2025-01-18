@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Tail trigger",
   "keywords": [
-    "Tail", "Trigger", "n8n-community-node-package"
+    "Tail", "Trigger", "", "n8n-community-node-package"
   ],
   "license": "MIT",
   "homepage": "www.zubial.net",
   "author": {
     "name": "Zubial.net",
-    "email": "bertrand@zubial.net"
+    "email": "support@zubial.net"
   },
   "repository": {
     "type": "git",
