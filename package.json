@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "Tail trigger",
   "keywords": [
-    "Tail", "Trigger", "", "n8n-community-node-package"
+    "Tail", "Trigger", "Local host", "CLI", "n8n-community-node-package"
   ],
   "license": "MIT",
   "homepage": "www.zubial.net",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zubial/n8n-nodes-tail.git"
+    "url": "git+https://github.com/zubial/n8n-nodes-tail.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -27,8 +27,8 @@
     "dev": "tsc --watch",
     "format": "prettier nodes --write",
     "lint": "eslint nodes package.json",
-    "lintfix": "eslint nodes package.json --fix",
-    "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes package.json"
+    "prepublish": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes package.json",
+    "package": "pnpm prepublish && npm pack --pack-destination ./pack/"
   },
   "files": [
     "dist"
