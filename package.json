@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-tail",
-  "version": "1.0.1",
+  "version": "1.0.dev",
   "description": "Tail trigger",
   "keywords": [
     "Tail", "Trigger", "Local host", "CLI", "n8n-community-node-package"
@@ -28,7 +28,7 @@
     "format": "prettier nodes --write",
     "lint": "eslint nodes package.json",
     "prepublish": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes package.json",
-    "package": "pnpm prepublish && npm pack --pack-destination ./pack/"
+    "package": "pnpm prepublish && npm pack --pack-destination ./package/"
   },
   "files": [
     "dist"
