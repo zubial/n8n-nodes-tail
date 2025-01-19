@@ -35,9 +35,9 @@ export class Tail implements INodeType {
                 displayName: 'File Expression',
                 name: 'file',
                 type: 'string',
-                default: 'file.log',
+                default: 'file*.log',
                 required: true,
-                description: 'Specify a file to monitor for real-time updates',
+                description: 'Specify file expression to monitor for real-time updates',
             },
             {
                 displayName: 'Options',
@@ -48,7 +48,7 @@ export class Tail implements INodeType {
                 options: [
                     {
                         displayName: 'Include Previous Lines',
-                        name: 'nlines',
+                        name: 'nLines',
                         type: 'number',
                         default: 0,
                         description: 'How many previous lines are loaded on startup? (-n option)',
@@ -66,15 +66,16 @@ export class Tail implements INodeType {
     };
 
     async trigger(this: ITriggerFunctions): Promise<ITriggerResponse> {
+        // Parameters & Options
         const directory = this.getNodeParameter('directory') as string;
         const file = this.getNodeParameter('file') as string;
 
         const options = this.getNodeParameter('options') as IDataObject;
-        const nlines = options.nlines || 0;
-        const deduplicate = options.deduplicate;
+        const nLines = options.nLines as number || 0;
+        const deduplicate = options.deduplicate as boolean;
 
-        const command: string = `tail -f -n ${nlines} ${directory}${file}`;
-
+        // Command shell
+        const command: string = `tail -f -n ${nLines} ${directory}${file}`;
         console.log(`Tail process starting on ${directory}${file}`);
 
         let child = spawn('sh',['-c', command]);
@@ -89,10 +90,9 @@ export class Tail implements INodeType {
                 .filter((line) => line.trim() !== ''); // Split lines and filter out empty lines
 
             for (const line of lines) {
-                if (!deduplicate || line !== previous) {
+                if (!deduplicate || line !== previous) { // Reject Duplicate Lines
                     this.emit([this.helpers.returnJsonArray([{line: line}])]);
                 }
-
                 previous = line;
             }
         });
