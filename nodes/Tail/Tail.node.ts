@@ -32,7 +32,7 @@ export class Tail implements INodeType {
                 description: 'Define a working directory',
             },
             {
-                displayName: 'File',
+                displayName: 'File Expression',
                 name: 'file',
                 type: 'string',
                 default: 'file.log',
@@ -47,11 +47,18 @@ export class Tail implements INodeType {
                 default: {},
                 options: [
                     {
-                        displayName: 'Last Lines',
-                        name: 'last',
+                        displayName: 'Include Previous Lines',
+                        name: 'nlines',
                         type: 'number',
                         default: 0,
-                        description: 'How many last lines are loaded on startup?',
+                        description: 'How many previous lines are loaded on startup? (-n option)',
+                    },
+                    {
+                        displayName: 'Reject Duplicate Lines',
+                        name: 'deduplicate',
+                        type: 'boolean',
+                        default: false,
+                        description: 'Whether to reject lines that are identical to the previous one',
                     },
                 ],
             },
@@ -63,9 +70,10 @@ export class Tail implements INodeType {
         const file = this.getNodeParameter('file') as string;
 
         const options = this.getNodeParameter('options') as IDataObject;
-        const last = options.last || 0;
+        const nlines = options.nlines || 0;
+        const deduplicate = options.deduplicate;
 
-        const command: string = `tail -f -n ${last} ${directory}${file}`;
+        const command: string = `tail -f -n ${nlines} ${directory}${file}`;
 
         console.log(`Tail process starting on ${directory}${file}`);
 
@@ -73,16 +81,19 @@ export class Tail implements INodeType {
 
         child.stderr.pipe(process.stderr); // Redirect stderr to the console for error output.
 
+        let previous = "";
         child.stdout.on('data', (data: Buffer) => {
-            console.log(data.toString());
-
             const lines: string[] = data
                 .toString()
                 .split('\n')
                 .filter((line) => line.trim() !== ''); // Split lines and filter out empty lines
 
             for (const line of lines) {
-                this.emit([this.helpers.returnJsonArray([{line: line}])]);
+                if (!deduplicate || line !== previous) {
+                    this.emit([this.helpers.returnJsonArray([{line: line}])]);
+                }
+
+                previous = line;
             }
         });
 

@@ -2,9 +2,10 @@
 
 ### Features
 
-* Allow expression file parameter (e.g. wildcard ou regex)
+* Allow **File Expression** parameter (e.g. wildcard ou regex)
 ` file*.log `
-
+* Add option **Reject Duplicate Lines**
+`line !== previous`
 
 ### Fixed
 
