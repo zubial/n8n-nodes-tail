@@ -5,7 +5,7 @@ import {
     ITriggerFunctions,
     ITriggerResponse,
 } from 'n8n-workflow';
-import {ChildProcessWithoutNullStreams, spawn} from 'child_process';
+import {spawn} from 'child_process';
 
 export class Tail implements INodeType {
     description: INodeTypeDescription = {
@@ -65,11 +65,12 @@ export class Tail implements INodeType {
         const options = this.getNodeParameter('options') as IDataObject;
         const last = options.last || 0;
 
-        const args: string[] = ['-f', '-n', last.toString(), directory + file];
+        const command: string = `tail -f -n ${last} ${directory}${file}`;
 
         console.log(`Tail process starting on ${directory}${file}`);
 
-        let child: ChildProcessWithoutNullStreams = spawn('tail', args);
+        let child = spawn('sh',['-c', command]);
+
         child.stderr.pipe(process.stderr); // Redirect stderr to the console for error output.
 
         child.stdout.on('data', (data: Buffer) => {
