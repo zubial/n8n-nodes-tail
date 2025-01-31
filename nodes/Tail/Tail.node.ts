@@ -75,7 +75,7 @@ export class Tail implements INodeType {
         const deduplicate = options.deduplicate as boolean;
 
         // Command shell
-        const command: string = `tail -f -n ${nLines} ${directory}${file}`;
+        const command: string = `tail -F -n ${nLines} ${directory}${file}`;
         console.log(`Tail process starting on ${directory}${file}`);
 
         let child = spawn('sh',['-c', command]);
