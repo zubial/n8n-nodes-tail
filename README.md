@@ -10,9 +10,7 @@ TailTrigger allows real-time monitoring of a local file to start the workflow wh
 
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-Or manual install with `npm i n8n-nodes-tail`
-
-https://www.npmjs.com/package/n8n-nodes-tail
+Install with `npm i n8n-nodes-tail`
 
 ## Usage
 Disclaimer: It is not recommended to use this on large log files (such as nginx logs), as it may trigger an excessive number of workflows.

@@ -3,7 +3,7 @@
   "version": "1.0.dev",
   "description": "Tail trigger",
   "keywords": [
-    "Tail", "Trigger", "Local host", "CLI", "n8n-community-node-package"
+    "Tail", "Trigger", "Local host", "CLI", "SecOps", "Zubial", "n8n-community-node-package"
   ],
   "license": "MIT",
   "homepage": "www.zubial.net",

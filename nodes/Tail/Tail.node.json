@@ -12,5 +12,6 @@
 	},
 	"subcategories": {
 		"Core Nodes": ["Other Trigger Nodes"]
-	}
+	},
+	"alias": ["SecOps"]
 }

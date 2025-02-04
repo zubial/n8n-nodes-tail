@@ -92,8 +92,8 @@ export class Tail implements INodeType {
             for (const line of lines) {
                 if (!deduplicate || line !== previous) { // Reject Duplicate Lines
                     this.emit([this.helpers.returnJsonArray([{line: line}])]);
+                    previous = line;
                 }
-                previous = line;
             }
         });
 
