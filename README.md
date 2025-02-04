@@ -1,4 +1,4 @@
-# n8n-nodes-tail
+# TailTrigger – Custom n8n Node for real-time Monitoring
 
 This is a n8n community node.
 
